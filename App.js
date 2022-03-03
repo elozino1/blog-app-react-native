@@ -1,25 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BlogPostsScreen from './screens/BlogPostsScreen'
-import CommentsScreen from './screens/CommentsScreen'
-import NewPostScreen from './screens/NewPostScreen'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 
-const Stack = createNativeStackNavigator()
+import { reducer } from './redux/reducer';
+
+import NestedApp from './NestedApp';
 
 export default function App() {
+
+  const store =  createStore(reducer)
   
   //render view
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Posts">
-        <Stack.Screen name="BlogPosts" component={BlogPostsScreen} options={{title: "Posts"}} />
-        <Stack.Screen name="Comments" component={CommentsScreen} options={{title: "Comments"}} />
-        <Stack.Screen name="NewPost" component={NewPostScreen} options={{title: "Create Post"}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NestedApp />
+    </Provider>
   );
 }
 
